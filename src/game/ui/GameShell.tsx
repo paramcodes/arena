@@ -16,6 +16,13 @@ import { PauseMenu } from './PauseMenu';
 import { Inspector } from './Inspector';
 import { TouchControls } from './TouchControls';
 
+declare global {
+  interface Window {
+    __UI_STORE__?: unknown;
+    __WORLD_STORE__?: unknown;
+  }
+}
+
 // The 3D canvas needs the browser, so it loads only on the client.
 const Scene = dynamic(() => import('@/game/scene/Scene'), {
   ssr: false,
@@ -32,6 +39,8 @@ export function GameShell() {
 
   useEffect(() => {
     setCanRender(rendererInUse(probeEnvironment()) !== 'none');
+    window.__UI_STORE__ = useUiStore;
+    window.__WORLD_STORE__ = useWorldStore;
     const onError = (e: ErrorEvent) => logEvent('error', 'window error', { message: e.message.slice(0, 120) });
     const onRejection = () => logEvent('error', 'unhandled promise rejection');
     window.addEventListener('error', onError);
