@@ -48,6 +48,7 @@ Each phase is one Claude Code session. Phases do not auto-continue.
 | 08 Animation district | Partly built: state machine, crossfade, procedural figure. No skeletal clips or skinning. |
 | 09 AI district | Partly built: FSM and utility AI for one NPC. No A*, NavMesh, or behaviour trees. |
 | 10 Performance district | Built: instancing vs separate meshes, measured metrics. Culling, LOD, and streaming not built. |
-| 11–19 | Not built |
+| 11 Systems district | Built: ECS, pool, event bus, fixed timestep, toggleable systems in a lab. Not connected to the 3D game. |
+| 12–19 | Not built |
 
 Known deviations from the original prompt are recorded in each phase's handoff. The biggest is that the renderer is WebGL only; WebGPU is deferred.

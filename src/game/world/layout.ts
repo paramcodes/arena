@@ -46,7 +46,7 @@ export const ZONES: Zone[] = [
   { id: 'web-observatory', name: 'Web Observatory', position: [0, 0, -40], status: 'coming' },
 ];
 
-export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance' | 'physics' | 'animation' | 'ai';
+export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance' | 'physics' | 'animation' | 'ai' | 'systems';
 
 export interface Interactable {
   id: string;
@@ -143,6 +143,18 @@ export const INTERACTABLES: Interactable[] = [
       'Lower its health to make it flee. Walk close to see it chase.',
     ],
     position: [20, 0, 19],
+    radius: 2.2,
+  },
+  {
+    id: 'systems-panel',
+    kind: 'systems',
+    label: 'Use systems panel',
+    title: 'Systems panel',
+    body: [
+      'A game is a set of systems that run in order every fixed step: spawn, move, collide, expire, check health.',
+      'Each system only reads and writes components. Switch one off to see what it was responsible for.',
+    ],
+    position: [3, 0, 12],
     radius: 2.2,
   },
 ];
