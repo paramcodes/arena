@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { pickRenderer, probeEnvironment } from '@/web/features';
+import { probeEnvironment, rendererInUse } from '@/web/features';
 import { logEvent } from '@/observability/log';
 import { ErrorBoundary } from './ErrorBoundary';
 import { installKeyboard } from '@/game/input/keyboard';
@@ -14,6 +14,7 @@ import { InteractionPrompt } from './InteractionPrompt';
 import { DialogPanel } from './DialogPanel';
 import { PauseMenu } from './PauseMenu';
 import { Inspector } from './Inspector';
+import { TouchControls } from './TouchControls';
 
 // The 3D canvas needs the browser, so it loads only on the client.
 const Scene = dynamic(() => import('@/game/scene/Scene'), {
@@ -30,7 +31,7 @@ export function GameShell() {
   const [canRender, setCanRender] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setCanRender(pickRenderer(probeEnvironment()) !== 'none');
+    setCanRender(rendererInUse(probeEnvironment()) !== 'none');
     const onError = (e: ErrorEvent) => logEvent('error', 'window error', { message: e.message.slice(0, 120) });
     const onRejection = () => logEvent('error', 'unhandled promise rejection');
     window.addEventListener('error', onError);
@@ -78,6 +79,7 @@ export function GameShell() {
       <DialogPanel />
       <PauseMenu />
       <Inspector />
+      <TouchControls />
       {notice ? <div className="panel notice" role="status">{notice}</div> : null}
     </main>
   );

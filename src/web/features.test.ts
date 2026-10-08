@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { emptyEnv, featuresFrom, pickRenderer, probeEnvironment, FEATURE_INFO } from './features';
+import { emptyEnv, featuresFrom, pickRenderer, probeEnvironment, rendererInUse, FEATURE_INFO } from './features';
 
 describe('pickRenderer', () => {
   it('prefers WebGPU, falls back to WebGL 2, then none', () => {
@@ -43,5 +43,12 @@ describe('probeEnvironment', () => {
     expect(env.wasm).toBe(true);
     expect(env.pointerLock).toBe(true);
     expect(env.sharedArrayBuffer).toBe(false); // present, but the page is not isolated
+  });
+});
+
+describe('rendererInUse', () => {
+  it('uses WebGL 2 even when WebGPU is detected, because the WebGPU renderer is not built', () => {
+    expect(rendererInUse({ ...emptyEnv(), webgpu: true, webgl2: true })).toBe('webgl2');
+    expect(rendererInUse({ ...emptyEnv(), webgpu: true })).toBe('none');
   });
 });

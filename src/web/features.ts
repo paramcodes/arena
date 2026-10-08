@@ -92,6 +92,12 @@ export function pickRenderer(env: PlatformEnv): Renderer {
   return 'none';
 }
 
+// The renderer the game actually uses. WebGPU is detected, but the WebGPU renderer is not built yet,
+// so the game always draws with WebGL 2 when it is available.
+export function rendererInUse(env: PlatformEnv): 'webgl2' | 'none' {
+  return env.webgl2 ? 'webgl2' : 'none';
+}
+
 export function emptyEnv(): PlatformEnv {
   return {
     webgl2: false, webgpu: false, wasm: false, workers: false, offscreenCanvas: false,

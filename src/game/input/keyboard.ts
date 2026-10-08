@@ -50,3 +50,18 @@ export function readGamepad(): { x: number; y: number; jump: boolean } {
   prevA = a;
   return { x: dead(pad.axes[0] ?? 0), y: dead(pad.axes[1] ?? 0), jump };
 }
+
+// Touch buttons write here. The player reads it each frame, like the keyboard and gamepad.
+export const touchInput = { x: 0, y: 0, jumpRequested: false, interactRequested: false };
+
+export function takeTouchJump(): boolean {
+  const v = touchInput.jumpRequested;
+  touchInput.jumpRequested = false;
+  return v;
+}
+
+export function takeTouchInteract(): boolean {
+  const v = touchInput.interactRequested;
+  touchInput.interactRequested = false;
+  return v;
+}

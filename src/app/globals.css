@@ -35,3 +35,28 @@ kbd { background: #1e293b; border: 1px solid #475569; border-radius: 4px; paddin
 .child button { font-size: 18px; padding: 10px 14px; min-height: 44px; min-width: 44px; }
 .child kbd { font-size: 16px; }
 .notice { top: auto; bottom: 24px; left: 12px; width: min(420px, calc(100vw - 24px)); background: #7c2d12; }
+
+/* Touch controls (shown only on touch screens). */
+.touch { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 12px; pointer-events: none; z-index: 5; }
+.touch button { pointer-events: auto; min-width: 64px; min-height: 64px; border-radius: 50%; font-size: 20px; opacity: 0.85; touch-action: none; user-select: none; }
+.dpad { display: grid; grid-template-columns: repeat(3, 64px); grid-template-rows: repeat(3, 64px); gap: 4px; }
+.touch-actions { display: flex; gap: 10px; }
+
+/* Narrow screens: stack the panels so they do not cover the whole view. */
+@media (max-width: 700px) {
+  .topbar { left: 8px; right: 8px; width: auto; }
+  .topbar h1 { font-size: 16px; }
+  .topbar .help { display: none; }
+  .mission { top: 112px; bottom: auto; left: 8px; right: 8px; width: auto; max-height: 30vh; font-size: 13px; }
+  .dialog { top: 50%; bottom: auto; transform: translate(-50%, -50%); width: calc(100vw - 16px); max-height: 70vh; }
+  .inspector { left: 8px; right: 8px; top: auto; bottom: 12px; width: auto; max-height: 50vh; }
+  .prompt { bottom: 130px; }
+}
+
+/* Stacking: dialogs and the pause menu sit above the inspector and the side panels. */
+.inspector { z-index: 10; }
+.mission { z-index: 10; }
+.prompt { z-index: 15; }
+.dialog { z-index: 30; }
+.overlay { z-index: 40; }
+.notice { z-index: 35; }

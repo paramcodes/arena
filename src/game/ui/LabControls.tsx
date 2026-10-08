@@ -78,6 +78,9 @@ export function PerformanceControls() {
       <label>
         <input type="checkbox" checked={instanced} onChange={(e) => setInstanced(e.target.checked)} /> Instancing on
       </label>
+      {!instanced ? (
+        <p>Separate meshes outside the camera's view are skipped (frustum culling), so their draw-call count depends on the view. Instanced trees always take one call.</p>
+      ) : null}
       {!instanced && count > NAIVE_CAP ? (
         <p role="note">Instancing off shows at most {NAIVE_CAP.toLocaleString()} separate trees to keep this page usable.</p>
       ) : null}

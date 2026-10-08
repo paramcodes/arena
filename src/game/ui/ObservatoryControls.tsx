@@ -1,14 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { featuresFrom, pickRenderer, probeEnvironment } from '@/web/features';
+import { featuresFrom, probeEnvironment, rendererInUse } from '@/web/features';
 import { ConceptCard } from './ConceptCard';
 
 export function ObservatoryControls() {
   // Probed once, on the client, when the panel opens.
   const [env] = useState(() => probeEnvironment());
   const features = featuresFrom(env);
-  const renderer = pickRenderer(env);
+  const inUse = rendererInUse(env);
 
   return (
     <>
@@ -16,7 +16,8 @@ export function ObservatoryControls() {
         These checks run in your browser right now. Each feature solves a constraint that the browser has. The game chooses a renderer from what it finds.
       </p>
       <p>
-        <strong>Renderer chosen: {renderer === 'none' ? 'none (3D unavailable)' : renderer === 'webgpu' ? 'WebGPU' : 'WebGL 2'}</strong>
+        <strong>Renderer in use: {inUse === 'webgl2' ? 'WebGL 2' : 'none (3D unavailable)'}</strong>
+        {env.webgpu ? ' WebGPU is available here, but the game does not use a WebGPU renderer yet.' : null}
       </p>
       <ul className="features">
         {features.map((f) => (

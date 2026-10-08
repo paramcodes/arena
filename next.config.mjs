@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 
-const securityHeaders = JSON.parse(readFileSync(new URL('./security-headers.json', import.meta.url), 'utf8')).headers;
+const config = JSON.parse(readFileSync(new URL('./security-headers.json', import.meta.url), 'utf8'));
+const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const securityHeaders = [...config.headers, { key: 'Content-Security-Policy', value: config.csp[env] }];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

@@ -4,7 +4,7 @@ import { CapsuleCollider, RigidBody, useRapier, type RapierRigidBody } from '@re
 import * as THREE from 'three';
 import { PLAYER, SPAWN, WALL, nearestInteractable } from '../world/layout';
 import { cameraRig, setPlayerPosition } from '../world/shared';
-import { clampUnit, consumePress, isHeld, readGamepad } from '../input/keyboard';
+import { clampUnit, consumePress, isHeld, readGamepad, takeTouchInteract, takeTouchJump, touchInput } from '../input/keyboard';
 import { useUiStore } from '../store/uiStore';
 import { useWorldStore } from '../store/worldStore';
 import { useMissionStore } from '@/missions/missionStore';
@@ -40,8 +40,8 @@ export function Player() {
     const ui = useUiStore.getState();
 
     // Read one-shot keys every frame, even when paused, so old presses cannot fire later.
-    const interactPressed = consumePress('KeyE');
-    const jumpPressed = consumePress('Space');
+    const interactPressed = consumePress('KeyE') || takeTouchInteract();
+    const jumpPressed = consumePress('Space') || takeTouchJump();
 
     if (ui.paused) return;
 
@@ -77,8 +77,8 @@ export function Player() {
     const pad = readGamepad();
     const keyF = (isHeld('KeyW') || isHeld('ArrowUp') ? 1 : 0) - (isHeld('KeyS') || isHeld('ArrowDown') ? 1 : 0);
     const keyS = (isHeld('KeyD') ? 1 : 0) - (isHeld('KeyA') ? 1 : 0);
-    const fwdAxis = locked ? 0 : clampUnit(keyF - pad.y);
-    const sideAxis = locked ? 0 : clampUnit(keyS + pad.x);
+    const fwdAxis = locked ? 0 : clampUnit(keyF - pad.y + touchInput.y);
+    const sideAxis = locked ? 0 : clampUnit(keyS + pad.x + touchInput.x);
 
     // Move relative to the camera's yaw, so "forward" is away from the camera.
     const yaw = cameraRig.yaw;
