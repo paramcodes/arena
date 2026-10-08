@@ -13,14 +13,13 @@ Each row says what was checked and what the result is. "Not measured" means it h
 | Mobile | On-screen touch controls (d-pad, jump, interact) on touch screens; panels stack on narrow screens | Checked in headless Chromium with a phone-sized viewport: controls visible, forward button moves the player. Not tested on a real phone. |
 | Input modes | Keyboard; gamepad left stick and A button; touch d-pad | Touch verified in headless Chromium. Gamepad untested with real hardware. |
 | Audio policy | Web Audio is detected only | No sound is played yet, so no autoplay policy is needed. |
-| Security | See docs/SECURITY.md | Production policy has no unsafe-eval and allows wasm-unsafe-eval (needed by the physics engine; a regression test covers it). unsafe-inline remains. Not verified on the deployed host. |
+| Security | See docs/SECURITY.md | Per-request nonce policy: no unsafe-inline or unsafe-eval for scripts in production. Styles keep unsafe-inline (inline style attributes). Verified in headless Chromium with no console errors. Not verified on the deployed host. |
 | Testing | 129 unit tests (Vitest); 5 browser tests (Playwright, headless Chromium) | All 5 browser tests pass. Run with CHROME_PATH pointing at a Chromium. |
 | Observability | In-memory log; error boundary; window error listeners | No remote error reporting. Logs disappear on reload. |
 | Build and CI | Typecheck, test, and build in .github/workflows/ci.yml | CI has not run on GitHub yet. |
 
 ## Known gaps before launch
 1. Build the WebGPU renderer, or keep the observatory's honest "not used" wording.
-2. Replace unsafe-inline in the Content-Security-Policy with nonces.
-3. Record frame times on real GPU hardware (headless software rendering is not representative).
-4. Test in Firefox and Safari, and on a real phone.
-5. Run the browser tests in CI (CHROME_PATH or the Playwright download).
+2. Record frame times on real GPU hardware (headless software rendering is not representative).
+3. Test in Firefox and Safari, and on a real phone.
+4. Run the browser tests in CI (CHROME_PATH or the Playwright download).
