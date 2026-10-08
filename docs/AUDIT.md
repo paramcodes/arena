@@ -14,12 +14,12 @@ Each row says what was checked and what the result is. "Not measured" means it h
 | Input modes | Keyboard; gamepad left stick and A button; touch d-pad | Touch verified in headless Chromium. Gamepad untested with real hardware. |
 | Audio policy | Web Audio is detected only | No sound is played yet, so no autoplay policy is needed. |
 | Security | See docs/SECURITY.md | Per-request nonce policy: no unsafe-inline or unsafe-eval for scripts in production. Styles keep unsafe-inline (inline style attributes). Verified in headless Chromium with no console errors. Not verified on the deployed host. |
-| Testing | 129 unit tests (Vitest); 5 browser tests (Playwright, headless Chromium) | All 5 browser tests pass. Run with CHROME_PATH pointing at a Chromium. |
+| Testing | 134 unit tests (Vitest); 5 browser tests (Playwright, headless Chromium) | All pass locally. CI runs both in separate jobs (browser job not yet run on GitHub). |
 | Observability | In-memory log; error boundary; window error listeners | No remote error reporting. Logs disappear on reload. |
-| Build and CI | Typecheck, test, and build in .github/workflows/ci.yml | CI has not run on GitHub yet. |
+| Build and CI | Typecheck, unit tests, build; then browser tests in a separate job, with the report uploaded on failure (.github/workflows/ci.yml) | Not yet run on GitHub. |
 
 ## Known gaps before launch
 1. Build the WebGPU renderer, or keep the observatory's honest "not used" wording.
 2. Record frame times on real GPU hardware (headless software rendering is not representative).
 3. Test in Firefox and Safari, and on a real phone.
-4. Run the browser tests in CI (CHROME_PATH or the Playwright download).
+4. The CI browser job (.github/workflows/ci.yml) is written and runs the same command that passes locally. It has not run on GitHub yet. The first GitHub run is the check. Headless runners use SwiftShader for WebGL, so timings may differ.

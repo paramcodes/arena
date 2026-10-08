@@ -15,10 +15,12 @@ export default defineConfig({
   testDir: 'e2e',
   timeout: 420_000,
   workers: 1,
+  reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: 'http://localhost:3000',
     viewport: { width: 800, height: 500 },
-    launchOptions: chrome ? { executablePath: chrome, args } : {},
+    // The GPU flags are passed in both cases: headless runners have no GPU, so WebGL uses SwiftShader.
+    launchOptions: { executablePath: chrome || undefined, args },
   },
   // Run `npm run build` first. This serves the built app, which is what users get.
   webServer: {
