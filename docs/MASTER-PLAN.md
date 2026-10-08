@@ -32,3 +32,17 @@ Path: IDEA → VOCABULARY → MENTAL MODEL → SYSTEM → PRECISE PROMPT → IMP
 | 19 | Production hardening | Audit performance, memory, loading, compatibility, WebGPU fallback, a11y, mobile, audio policy, security, tests, observability. Measure before optimizing. |
 
 Each phase is one Claude Code session. Phases do not auto-continue.
+
+## Status (as of this build)
+
+| Phase | Status |
+|---|---|
+| 00 Repository contract | Done |
+| 01 Make the game world | Built; not verified in a browser |
+| 02 Interaction framework | Built; not verified in a browser |
+| 03 Mission framework | Built; unit tested |
+| 04 Vertical slice: Collision | Built; logic unit tested; not verified in a browser |
+| 05 Simulation engine | Built; unit tested |
+| 06–19 | Not built |
+
+Known deviations from the original prompt are recorded in each phase's handoff. The biggest is that the renderer is WebGL only; WebGPU is deferred.

@@ -8,9 +8,8 @@
 - Unit tests: `npm test` (Vitest)
 - Interaction tests: `npm run test:e2e` (Playwright)
 - Typecheck: `npm run typecheck`
-- Lint: `npm run lint`
 
-Commands are recorded here once the scripts exist. Until Phase 01, only docs exist.
+Playwright tests need a browser: `npx playwright install chromium` once, then `npm run test:e2e`.
 
 ## Conventions
 
