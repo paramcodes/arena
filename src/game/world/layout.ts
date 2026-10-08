@@ -36,17 +36,17 @@ export interface Zone {
 
 export const ZONES: Zone[] = [
   { id: 'physics-lab', name: 'Physics Lab', position: [-22, 0, -18], status: 'open' },
-  { id: 'graphics-forest', name: 'Graphics Forest', position: [22, 0, -24], status: 'coming' },
+  { id: 'graphics-forest', name: 'Graphics Forest', position: [22, 0, -24], status: 'open' },
   { id: 'animation-studio', name: 'Animation Studio', position: [36, 0, 0], status: 'coming' },
   { id: 'ai-village', name: 'AI Village', position: [24, 0, 22], status: 'coming' },
-  { id: 'performance-mine', name: 'Performance Mine', position: [-6, 0, 36], status: 'coming' },
+  { id: 'performance-mine', name: 'Performance Mine', position: [-6, 0, 36], status: 'open' },
   { id: 'multiplayer-arena', name: 'Multiplayer Arena', position: [-30, 0, 12], status: 'coming' },
   { id: 'audio-cave', name: 'Audio Cave', position: [-36, 0, -2], status: 'coming' },
   { id: 'world-builder', name: 'World Builder', position: [14, 0, 36], status: 'coming' },
   { id: 'web-observatory', name: 'Web Observatory', position: [0, 0, -40], status: 'coming' },
 ];
 
-export type InteractableKind = 'sign' | 'terminal';
+export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance';
 
 export interface Interactable {
   id: string;
@@ -84,6 +84,30 @@ export const INTERACTABLES: Interactable[] = [
     position: [-23, 0, -14],
     radius: 2.2,
     mission: { missionId: 'wall-that-isnt-a-wall', stepId: 'read-terminal' },
+  },
+  {
+    id: 'material-panel',
+    kind: 'material',
+    label: 'Use material panel',
+    title: 'Material panel',
+    body: [
+      'Two sliders change how light bounces off the orange sphere.',
+      'Roughness: smooth reflects a sharp highlight, rough spreads it out. Metalness: metals reflect the room; plastics do not.',
+    ],
+    position: [19, 0, -20],
+    radius: 2.2,
+  },
+  {
+    id: 'perf-panel',
+    kind: 'performance',
+    label: 'Use performance panel',
+    title: 'Performance panel',
+    body: [
+      'Every tree costs the GPU work. Choose a number of trees, then toggle instancing to see what it changes.',
+      'The numbers in the panel are measured in your browser.',
+    ],
+    position: [-3, 0, 34],
+    radius: 2.2,
   },
 ];
 

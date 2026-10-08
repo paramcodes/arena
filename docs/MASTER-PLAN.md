@@ -43,6 +43,9 @@ Each phase is one Claude Code session. Phases do not auto-continue.
 | 03 Mission framework | Built; unit tested |
 | 04 Vertical slice: Collision | Built; logic unit tested; not verified in a browser |
 | 05 Simulation engine | Built; unit tested |
-| 06–19 | Not built |
+| 06 Graphics district | Partly built: PBR material lab and environment map. Scene graph, shader, and post-processing labs not built. |
+| 07–09 | Not built |
+| 10 Performance district | Built: instancing vs separate meshes, measured metrics. Culling, LOD, and streaming not built. |
+| 11–19 | Not built |
 
 Known deviations from the original prompt are recorded in each phase's handoff. The biggest is that the renderer is WebGL only; WebGPU is deferred.

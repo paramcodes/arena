@@ -4,6 +4,8 @@ import { Hub } from './Hub';
 import { PhysicsLab } from './PhysicsLab';
 import { Player } from './Player';
 import { CameraRig } from './CameraRig';
+import { GraphicsLab } from './GraphicsLab';
+import { PerformanceLab, PerfProbe } from './PerformanceLab';
 import { useUiStore } from '../store/uiStore';
 
 export default function Scene() {
@@ -17,9 +19,12 @@ export default function Scene() {
       <Physics gravity={[0, -9.81, 0]} paused={paused}>
         <Hub />
         <PhysicsLab />
+        <GraphicsLab />
+        <PerformanceLab />
         <Player />
       </Physics>
       <CameraRig />
+      <PerfProbe />
     </Canvas>
   );
 }

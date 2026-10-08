@@ -1,12 +1,10 @@
 import { INTERACTABLES } from '@/game/world/layout';
 import { useUiStore } from '@/game/store/uiStore';
-import { useWorldStore } from '@/game/store/worldStore';
+import { MaterialControls, PerformanceControls, TerminalControls } from './LabControls';
 
 export function DialogPanel() {
   const openId = useUiStore((s) => s.openInteractionId);
   const openInteraction = useUiStore((s) => s.openInteraction);
-  const colliderOn = useWorldStore((s) => s.wallColliderEnabled);
-  const setCollider = useWorldStore((s) => s.setWallCollider);
   const item = INTERACTABLES.find((i) => i.id === openId);
   if (!item) return null;
 
@@ -16,21 +14,9 @@ export function DialogPanel() {
       {item.body.map((line) => (
         <p key={line}>{line}</p>
       ))}
-      {item.kind === 'terminal' ? (
-        <>
-          <p>
-            <strong>Wall-01 collider: {colliderOn ? 'ON' : 'OFF'}</strong>
-          </p>
-          <div className="row">
-            <button type="button" onClick={() => setCollider(true)} disabled={colliderOn}>
-              Turn collider on
-            </button>
-            <button type="button" onClick={() => setCollider(false)} disabled={!colliderOn}>
-              Turn collider off (break it)
-            </button>
-          </div>
-        </>
-      ) : null}
+      {item.kind === 'terminal' ? <TerminalControls /> : null}
+      {item.kind === 'material' ? <MaterialControls /> : null}
+      {item.kind === 'performance' ? <PerformanceControls /> : null}
       <button type="button" onClick={() => openInteraction(null)}>Close (Esc)</button>
     </section>
   );
