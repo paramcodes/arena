@@ -4,9 +4,12 @@ import { CAMERA } from '../world/layout';
 import { cameraRig, playerPosition } from '../world/shared';
 import { isHeld } from '../input/keyboard';
 import { useUiStore } from '../store/uiStore';
+import { shakeOffset, FEEL } from '@/feel/feel';
+import { feelState } from '@/feel/state';
 
 const target = new THREE.Vector3();
 const desired = new THREE.Vector3();
+const base = new THREE.Vector3();
 
 // Third-person follow camera. Left/Right arrows turn it around the player.
 export function CameraRig() {
@@ -21,13 +24,18 @@ export function CameraRig() {
     }
 
     target.set(playerPosition.x, playerPosition.y + 1, playerPosition.z);
-    desired
-      .set(Math.sin(cameraRig.yaw) * CAMERA.distance, CAMERA.height, Math.cos(cameraRig.yaw) * CAMERA.distance)
-      .add(playerPosition);
+    desired.set(
+      playerPosition.x + Math.sin(cameraRig.yaw) * CAMERA.distance,
+      playerPosition.y + CAMERA.height,
+      playerPosition.z + Math.cos(cameraRig.yaw) * CAMERA.distance,
+    );
 
     // Reduced motion removes camera lag and snaps to the target position.
     const k = ui.reducedMotion ? 1 : 1 - Math.exp(-dt * 10);
-    camera.position.lerp(desired, k);
+    // Lerp a separate base position so shake never accumulates into the camera's motion.
+    base.lerp(desired, k);
+    const shake = shakeOffset((performance.now() - feelState.shakeStartMs) / 1000, FEEL.shakeSec, feelState.shakeIntensity);
+    camera.position.set(base.x + shake.x, base.y + shake.y, base.z);
     camera.lookAt(target);
   });
 

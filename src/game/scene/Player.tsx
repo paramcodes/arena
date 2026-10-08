@@ -3,8 +3,8 @@ import { useFrame } from '@react-three/fiber';
 import { CapsuleCollider, RigidBody, useRapier, type RapierRigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
 import { PLAYER, SPAWN, WALL, nearestInteractable } from '../world/layout';
-import { cameraRig, playerPosition } from '../world/shared';
-import { consumePress, isHeld } from '../input/keyboard';
+import { cameraRig, setPlayerPosition } from '../world/shared';
+import { clampUnit, consumePress, isHeld, readGamepad } from '../input/keyboard';
 import { useUiStore } from '../store/uiStore';
 import { useWorldStore } from '../store/worldStore';
 import { useMissionStore } from '@/missions/missionStore';
@@ -30,7 +30,7 @@ export function Player() {
     b.setLinvel({ x: 0, y: 0, z: 0 }, true);
     b.setAngvel({ x: 0, y: 0, z: 0 }, true);
     prev.current = { x: SPAWN[0], z: SPAWN[2] };
-    playerPosition.set(SPAWN[0], SPAWN[1], SPAWN[2]);
+    setPlayerPosition(SPAWN[0], SPAWN[1], SPAWN[2]);
   }, [resetSignal]);
 
   useFrame(() => {
@@ -47,7 +47,16 @@ export function Player() {
 
     const t = b.translation();
     const lv = b.linvel();
-    playerPosition.set(t.x, t.y, t.z);
+
+    // Safe failure: falling out of the world puts you back at the start with a message.
+    if (t.y < -8) {
+      b.setTranslation({ x: SPAWN[0], y: SPAWN[1], z: SPAWN[2] }, true);
+      b.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      prev.current = { x: SPAWN[0], z: SPAWN[2] };
+      ui.notify('You fell out of the world. Try again. Press R to reset the whole world.');
+      return;
+    }
+    setPlayerPosition(t.x, t.y, t.z);
 
     // Interaction: nearby prompt, and E to open or close.
     const near = nearestInteractable(t.x, t.z);
@@ -65,8 +74,11 @@ export function Player() {
 
     // Movement input is locked while a dialog is open.
     const locked = useUiStore.getState().openInteractionId !== null;
-    const fwdAxis = locked ? 0 : (isHeld('KeyW') || isHeld('ArrowUp') ? 1 : 0) - (isHeld('KeyS') || isHeld('ArrowDown') ? 1 : 0);
-    const sideAxis = locked ? 0 : (isHeld('KeyD') ? 1 : 0) - (isHeld('KeyA') ? 1 : 0);
+    const pad = readGamepad();
+    const keyF = (isHeld('KeyW') || isHeld('ArrowUp') ? 1 : 0) - (isHeld('KeyS') || isHeld('ArrowDown') ? 1 : 0);
+    const keyS = (isHeld('KeyD') ? 1 : 0) - (isHeld('KeyA') ? 1 : 0);
+    const fwdAxis = locked ? 0 : clampUnit(keyF - pad.y);
+    const sideAxis = locked ? 0 : clampUnit(keyS + pad.x);
 
     // Move relative to the camera's yaw, so "forward" is away from the camera.
     const yaw = cameraRig.yaw;
@@ -81,7 +93,7 @@ export function Player() {
     const grounded = hit !== null;
 
     let vy = lv.y; // gravity keeps acting on the vertical speed
-    if (grounded && jumpPressed && !locked) vy = PLAYER.jumpSpeed;
+    if (grounded && (jumpPressed || pad.jump) && !locked) vy = PLAYER.jumpSpeed;
     b.setLinvel({ x: move.x, y: vy, z: move.z }, true);
 
     // Phase 4 wall watcher: which mission steps did this frame prove?

@@ -43,12 +43,20 @@ Each phase is one Claude Code session. Phases do not auto-continue.
 | 03 Mission framework | Built; unit tested |
 | 04 Vertical slice: Collision | Built; logic unit tested; not verified in a browser |
 | 05 Simulation engine | Built; unit tested |
-| 06 Graphics district | Partly built: PBR material lab and environment map. Scene graph, shader, and post-processing labs not built. |
-| 07 Physics district | Partly built: gravity, restitution, friction, raycast. Joints, shape casts, character tuning not built. |
+| 06 Graphics district | Partly built: PBR lab and generated environment map. No scene-graph, shader, post-processing lab. WebGPU not built. |
+| 07 Physics district | Partly built: gravity, restitution, friction, raycast. No joints, shape casts, controller tuning. |
 | 08 Animation district | Partly built: state machine, crossfade, procedural figure. No skeletal clips or skinning. |
-| 09 AI district | Partly built: FSM and utility AI for one NPC. No A*, NavMesh, or behaviour trees. |
-| 10 Performance district | Built: instancing vs separate meshes, measured metrics. Culling, LOD, and streaming not built. |
-| 11 Systems district | Built: ECS, pool, event bus, fixed timestep, toggleable systems in a lab. Not connected to the 3D game. |
-| 12–19 | Not built |
+| 09 AI district | Partly built: FSM and utility AI for one NPC. No A*, NavMesh, behaviour trees. |
+| 10 Performance district | Partly built: instancing vs separate meshes, measured metrics. No culling, LOD, or streaming demo. |
+| 11 Systems district | Built: ECS, pool, event bus, fixed timestep, toggleable systems. Not connected to the 3D game. |
+| 12 Multiplayer arena | Built as a simulated lab: latency, prediction, reconciliation, interpolation. No rollback. |
+| 13 Web observatory | Built: live feature checks and renderer choice. WebGPU renderer not built. |
+| 14 Game feel | Built: shake, hit stop, recoil, particles. No trails or sound. |
+| 15 World building | Built: seeded terrain map, biomes, streaming, landmarks. 3D terrain not generated from the seed. |
+| 16 Child mode and accessibility | Built: child mode, gamepad, fall-and-retry. No touch. |
+| 17 Learning graph | Built: concept graph, mastery states, review schedule, saved progress. |
+| 18 AI tutor | Built as a rule-based tutor. Not a language model. |
+| 19 Production hardening | Built: error boundary, browser fallback, security headers, logging, CI, audit. Launch checklist in docs/AUDIT.md still open. |
 
-Known deviations from the original prompt are recorded in each phase's handoff. The biggest is that the renderer is WebGL only; WebGPU is deferred.
+All 19 phases have code. Several are partial, and each handoff lists what is missing.
+Most gaps are the same few: nothing has been run in a real browser, the WebGPU renderer and touch input are not built, and some systems are labs rather than parts of the 3D game.

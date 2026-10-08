@@ -35,3 +35,18 @@ export function consumePress(code: string): boolean {
   }
   return false;
 }
+
+export const clampUnit = (v: number): number => Math.max(-1, Math.min(1, v));
+
+// Gamepad: left stick for movement, button A for jump. Returns zeros when no pad is connected.
+let prevA = false;
+export function readGamepad(): { x: number; y: number; jump: boolean } {
+  const nav = typeof navigator !== 'undefined' ? navigator : undefined;
+  const pad = nav?.getGamepads?.()[0] ?? null;
+  if (!pad) return { x: 0, y: 0, jump: false };
+  const dead = (v: number) => (Math.abs(v) < 0.15 ? 0 : v);
+  const a = pad.buttons[0]?.pressed ?? false;
+  const jump = a && !prevA;
+  prevA = a;
+  return { x: dead(pad.axes[0] ?? 0), y: dead(pad.axes[1] ?? 0), jump };
+}

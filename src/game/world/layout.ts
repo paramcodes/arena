@@ -40,13 +40,13 @@ export const ZONES: Zone[] = [
   { id: 'animation-studio', name: 'Animation Studio', position: [36, 0, 0], status: 'open' },
   { id: 'ai-village', name: 'AI Village', position: [24, 0, 22], status: 'open' },
   { id: 'performance-mine', name: 'Performance Mine', position: [-6, 0, 36], status: 'open' },
-  { id: 'multiplayer-arena', name: 'Multiplayer Arena', position: [-30, 0, 12], status: 'coming' },
+  { id: 'multiplayer-arena', name: 'Multiplayer Arena', position: [-30, 0, 12], status: 'open' },
   { id: 'audio-cave', name: 'Audio Cave', position: [-36, 0, -2], status: 'coming' },
-  { id: 'world-builder', name: 'World Builder', position: [14, 0, 36], status: 'coming' },
-  { id: 'web-observatory', name: 'Web Observatory', position: [0, 0, -40], status: 'coming' },
+  { id: 'world-builder', name: 'World Builder', position: [14, 0, 36], status: 'open' },
+  { id: 'web-observatory', name: 'Web Observatory', position: [0, 0, -40], status: 'open' },
 ];
 
-export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance' | 'physics' | 'animation' | 'ai' | 'systems';
+export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance' | 'physics' | 'animation' | 'ai' | 'systems' | 'multiplayer' | 'observatory' | 'feel' | 'worldbuilder' | 'learning' | 'tutor';
 
 export interface Interactable {
   id: string;
@@ -155,6 +155,75 @@ export const INTERACTABLES: Interactable[] = [
       'Each system only reads and writes components. Switch one off to see what it was responsible for.',
     ],
     position: [3, 0, 12],
+    radius: 2.2,
+  },
+  {
+    id: 'multiplayer-panel',
+    kind: 'multiplayer',
+    label: 'Use network panel',
+    title: 'Network panel',
+    body: [
+      'Change the latency and see how your player and the bot behave. Turn prediction, reconciliation, and interpolation on and off to see what each one fixes.',
+    ],
+    position: [-27, 0, 9],
+    radius: 2.2,
+  },
+  {
+    id: 'observatory-panel',
+    kind: 'observatory',
+    label: 'Read browser panel',
+    title: 'Web observatory',
+    body: [
+      'These are the browser features the game depends on. Each one is checked live, here, in your browser.',
+    ],
+    position: [0, 0, -36],
+    radius: 2.2,
+  },
+  {
+    id: 'feel-panel',
+    kind: 'feel',
+    label: 'Use feel panel',
+    title: 'Game feel panel',
+    body: [
+      'The pink cube takes two kinds of hit. A plain hit does only the damage. A juiced hit adds small effects.',
+      'Each effect is small on its own. Together they make the same hit feel much stronger.',
+    ],
+    position: [4, 0, -14],
+    radius: 2.2,
+  },
+  {
+    id: 'worldbuilder-panel',
+    kind: 'worldbuilder',
+    label: 'Use world builder',
+    title: 'World builder',
+    body: [
+      'A seed is a number. The same seed always makes the same terrain. Heights come from layered noise; biomes come from height and moisture.',
+      'The world is loaded in cells around you. Stand in one place and only the cells near you are kept in memory.',
+    ],
+    position: [11, 0, 33],
+    radius: 2.2,
+  },
+  {
+    id: 'learning-panel',
+    kind: 'learning',
+    label: 'Open learning map',
+    title: 'Learning map',
+    body: [
+      'Each circle is a concept. Grey has not been seen, amber has been read, green is learned.',
+      'Finish a mission to learn its concepts. Concepts open up when the ones they depend on are learned.',
+    ],
+    position: [-4, 0, -10],
+    radius: 2.2,
+  },
+  {
+    id: 'tutor-panel',
+    kind: 'tutor',
+    label: 'Ask the tutor',
+    title: 'Tutor',
+    body: [
+      'Ask for a hint, a simple explanation, a comparison, or a quiz. Hints come one at a time.',
+    ],
+    position: [-4, 0, 6],
     radius: 2.2,
   },
 ];

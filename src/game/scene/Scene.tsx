@@ -9,6 +9,7 @@ import { GraphicsLab } from './GraphicsLab';
 import { PerformanceLab, PerfProbe } from './PerformanceLab';
 import { AnimationStudio } from './AnimationStudio';
 import { AiVillage } from './AiVillage';
+import { FeelLab } from './FeelLab';
 import { useUiStore } from '../store/uiStore';
 import { usePhysicsStore } from '../store/physicsStore';
 
@@ -27,6 +28,7 @@ export default function Scene() {
         <PhysicsDistrict />
         <GraphicsLab />
         <PerformanceLab />
+        <FeelLab />
         <Player />
       </Physics>
       <AnimationStudio />

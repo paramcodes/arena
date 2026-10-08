@@ -29,3 +29,9 @@ kbd { background: #1e293b; border: 1px solid #475569; border-radius: 4px; paddin
 .hc button { background: #fff; color: #000; border: 2px solid #000; }
 .hc kbd { background: #000; color: #fff; border-color: #fff; }
 .rm *, .rm *::before, .rm *::after { animation: none !important; transition: none !important; }
+
+/* Child mode: bigger text and controls, and more space around them. */
+.child .panel { font-size: 18px; line-height: 1.6; }
+.child button { font-size: 18px; padding: 10px 14px; min-height: 44px; min-width: 44px; }
+.child kbd { font-size: 16px; }
+.notice { top: auto; bottom: 24px; left: 12px; width: min(420px, calc(100vw - 24px)); background: #7c2d12; }

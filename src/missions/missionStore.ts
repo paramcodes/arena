@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { Mission } from '@/knowledge/schemas';
 import { MISSION_BY_ID } from '@/knowledge/content/missions';
 import { completeStep, isComplete, requestHint, startProgress, type MissionProgress } from './engine';
+import { useLearningStore } from '@/game/store/learningStore';
 
 function lookup(missionId: string): Mission {
   const mission = MISSION_BY_ID.get(missionId);
@@ -38,6 +39,10 @@ export const useMissionStore = create<MissionStoreState>((set, get) => ({
         ? Array.from(new Set([...s.unlocked, ...mission.unlocks]))
         : s.unlocked,
     }));
+    if (isComplete(mission, next)) {
+      // A finished mission teaches its concepts.
+      for (const c of mission.concepts) useLearningStore.getState().markLearned(c);
+    }
   },
 
   hint(missionId, stepId) {

@@ -5,6 +5,10 @@ interface UiState {
   inspectorOpen: boolean;
   reducedMotion: boolean;
   highContrast: boolean;
+  childMode: boolean;
+  notice: string | null;
+  setChildMode(value: boolean): void;
+  notify(message: string): void;
   nearbyId: string | null;
   openInteractionId: string | null;
   setPaused(value: boolean): void;
@@ -21,6 +25,15 @@ export const useUiStore = create<UiState>((set, get) => ({
   inspectorOpen: false,
   reducedMotion: false,
   highContrast: false,
+  childMode: false,
+  notice: null,
+  setChildMode: (value) => set({ childMode: value }),
+  notify: (message) => {
+    set({ notice: message });
+    setTimeout(() => {
+      if (get().notice === message) set({ notice: null });
+    }, 4000);
+  },
   nearbyId: null,
   openInteractionId: null,
   setPaused: (value) => set({ paused: value }),

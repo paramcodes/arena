@@ -18,3 +18,7 @@ Playwright tests need a browser: `npx playwright install chromium` once, then `n
 - Content files validated with Zod at load time.
 - Commit per phase: `phase-XX: <summary>`.
 - Handoff written before the commit, every phase.
+
+## One-line check
+
+`npm run check` runs typecheck, unit tests, and the production build (the same steps as CI).

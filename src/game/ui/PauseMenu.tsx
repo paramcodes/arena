@@ -9,6 +9,8 @@ export function PauseMenu() {
   const setReducedMotion = useUiStore((s) => s.setReducedMotion);
   const highContrast = useUiStore((s) => s.highContrast);
   const setHighContrast = useUiStore((s) => s.setHighContrast);
+  const childMode = useUiStore((s) => s.childMode);
+  const setChildMode = useUiStore((s) => s.setChildMode);
   const resetWorld = useWorldStore((s) => s.resetWorld);
   const resetMissions = useMissionStore((s) => s.reset);
   if (!paused) return null;
@@ -25,6 +27,9 @@ export function PauseMenu() {
         </label>
         <label>
           <input type="checkbox" checked={highContrast} onChange={(e) => setHighContrast(e.target.checked)} /> High contrast
+        </label>
+        <label>
+          <input type="checkbox" checked={childMode} onChange={(e) => setChildMode(e.target.checked)} /> Child mode (bigger, simpler text)
         </label>
       </section>
     </div>
