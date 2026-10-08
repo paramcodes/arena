@@ -44,7 +44,9 @@ Each phase is one Claude Code session. Phases do not auto-continue.
 | 04 Vertical slice: Collision | Built; logic unit tested; not verified in a browser |
 | 05 Simulation engine | Built; unit tested |
 | 06 Graphics district | Partly built: PBR material lab and environment map. Scene graph, shader, and post-processing labs not built. |
-| 07–09 | Not built |
+| 07 Physics district | Partly built: gravity, restitution, friction, raycast. Joints, shape casts, character tuning not built. |
+| 08 Animation district | Partly built: state machine, crossfade, procedural figure. No skeletal clips or skinning. |
+| 09 AI district | Partly built: FSM and utility AI for one NPC. No A*, NavMesh, or behaviour trees. |
 | 10 Performance district | Built: instancing vs separate meshes, measured metrics. Culling, LOD, and streaming not built. |
 | 11–19 | Not built |
 
