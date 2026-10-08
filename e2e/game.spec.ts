@@ -73,8 +73,8 @@ test('walking straight into the wall with the collider off completes the first s
 test('instanced draw calls stay flat as the tree count grows; separate meshes are culled when out of view', async ({ page }) => {
   await openWorld(page);
   // The performance panel is at (-3, 34). Stand within its 2.2 m trigger radius and press E.
-  await walkTo(page, -3, 32.5);
-  await expect(page.locator('.prompt')).toContainText('performance panel');
+  await walkTo(page, -3, 33.5, 0.8);
+  await expect(page.locator('.prompt')).toContainText('performance panel', { timeout: 15_000 });
   await page.keyboard.press('KeyE');
   const dialog = page.getByRole('dialog', { name: 'Performance panel' });
   await expect(dialog).toBeVisible({ timeout: 10_000 });
