@@ -1,6 +1,6 @@
 import { INTERACTABLES } from '@/game/world/layout';
 import { useUiStore } from '@/game/store/uiStore';
-import { MaterialControls, PerformanceControls, TerminalControls } from './LabControls';
+import { AiControls, AnimationControls, MaterialControls, PerformanceControls, PhysicsControls, TerminalControls } from './LabControls';
 
 export function DialogPanel() {
   const openId = useUiStore((s) => s.openInteractionId);
@@ -17,6 +17,9 @@ export function DialogPanel() {
       {item.kind === 'terminal' ? <TerminalControls /> : null}
       {item.kind === 'material' ? <MaterialControls /> : null}
       {item.kind === 'performance' ? <PerformanceControls /> : null}
+      {item.kind === 'physics' ? <PhysicsControls /> : null}
+      {item.kind === 'animation' ? <AnimationControls /> : null}
+      {item.kind === 'ai' ? <AiControls /> : null}
       <button type="button" onClick={() => openInteraction(null)}>Close (Esc)</button>
     </section>
   );

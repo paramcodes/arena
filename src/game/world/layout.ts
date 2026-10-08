@@ -37,8 +37,8 @@ export interface Zone {
 export const ZONES: Zone[] = [
   { id: 'physics-lab', name: 'Physics Lab', position: [-22, 0, -18], status: 'open' },
   { id: 'graphics-forest', name: 'Graphics Forest', position: [22, 0, -24], status: 'open' },
-  { id: 'animation-studio', name: 'Animation Studio', position: [36, 0, 0], status: 'coming' },
-  { id: 'ai-village', name: 'AI Village', position: [24, 0, 22], status: 'coming' },
+  { id: 'animation-studio', name: 'Animation Studio', position: [36, 0, 0], status: 'open' },
+  { id: 'ai-village', name: 'AI Village', position: [24, 0, 22], status: 'open' },
   { id: 'performance-mine', name: 'Performance Mine', position: [-6, 0, 36], status: 'open' },
   { id: 'multiplayer-arena', name: 'Multiplayer Arena', position: [-30, 0, 12], status: 'coming' },
   { id: 'audio-cave', name: 'Audio Cave', position: [-36, 0, -2], status: 'coming' },
@@ -46,7 +46,7 @@ export const ZONES: Zone[] = [
   { id: 'web-observatory', name: 'Web Observatory', position: [0, 0, -40], status: 'coming' },
 ];
 
-export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance';
+export type InteractableKind = 'sign' | 'terminal' | 'material' | 'performance' | 'physics' | 'animation' | 'ai';
 
 export interface Interactable {
   id: string;
@@ -107,6 +107,42 @@ export const INTERACTABLES: Interactable[] = [
       'The numbers in the panel are measured in your browser.',
     ],
     position: [-3, 0, 34],
+    radius: 2.2,
+  },
+  {
+    id: 'physics-panel',
+    kind: 'physics',
+    label: 'Use physics panel',
+    title: 'Physics panel',
+    body: [
+      'Gravity pulls things down. Restitution is how bouncy the ball is. Friction is how much the ramp grips it.',
+      'The yellow line is a raycast from the turret. It stops at the first thing it hits, and the length is measured.',
+    ],
+    position: [-26, 0, -8],
+    radius: 2.2,
+  },
+  {
+    id: 'animation-panel',
+    kind: 'animation',
+    label: 'Use animation panel',
+    title: 'Animation panel',
+    body: [
+      'The figure is driven by a state machine: idle, walk, run, jump, fall, land, attack.',
+      'Each state is a pose. Changing state blends the old pose into the new one over a few frames.',
+    ],
+    position: [33, 0, 3],
+    radius: 2.2,
+  },
+  {
+    id: 'ai-panel',
+    kind: 'ai',
+    label: 'Use AI panel',
+    title: 'AI panel',
+    body: [
+      'The NPC chooses between patrol, chase, and flee. The finite state machine uses fixed rules. Utility AI scores each choice and picks the highest.',
+      'Lower its health to make it flee. Walk close to see it chase.',
+    ],
+    position: [20, 0, 19],
     radius: 2.2,
   },
 ];
