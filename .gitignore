@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+*.log
+.DS_Store
+coverage
+test-results
+playwright-report
+next-env.d.ts
